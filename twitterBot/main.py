@@ -1,17 +1,14 @@
 import tweepy
 import subprocess
-from keys import keys
+from keys.keys import bearer_token
+from keys.keys import api_key
+from keys.keys import api_secret
+from keys.keys import access_token
+from keys.keys import access_token_secret
 
-
-def api():
-    auth = tweepy.OAuthHandler(keys.api_key, keys.api_secret)
-    auth.set_access_token(keys.access_token, keys.access_token_secret)
-    return tweepy.API(auth)
-
-
-def tweet(api: tweepy.API, text: str):
-    api.update_status(text)
-
+client = tweepy.Client(bearer_token, api_key, api_secret, access_token, access_token_secret)
+auth = tweepy.OAuthHandler(api_key, api_secret, access_token, access_token_secret)
+api = tweepy.API(auth)
 
 def terminal():
     cmd = "fortune"
@@ -24,12 +21,10 @@ def terminal():
 
 
 if __name__ == "__main__":
-    api = api()
     text = terminal()
-    if text.split()[0] != "Error:":
-        for i in range(0, len(text), 280):
-            tweet(api, text[i:i+280])
-    else:
-        pass
+    if len(text) < 280:
+        client.create_tweet(text = text)
+
+
 
 
