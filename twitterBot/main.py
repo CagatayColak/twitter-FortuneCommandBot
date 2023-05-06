@@ -24,7 +24,3 @@ if __name__ == "__main__":
     text = terminal()
     if len(text) < 280:
         client.create_tweet(text = text)
-
-
-
-
