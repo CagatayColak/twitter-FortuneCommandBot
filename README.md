@@ -9,3 +9,6 @@ Before running the bot, make sure you have the following prerequisites installed
 * Python 3.x
 * Tweepy library (pip install tweepy)
 
+## Getting Started
+To run the bot, simply clone the repository and run the fortune_bot.py file. Before running the bot, make sure to set up your Twitter API keys in the keys.py file. By default, the bot will execute the 'fortune' command and tweet its output. If you want to customize the command, you can modify the cmd variable in the terminal() function.
+
