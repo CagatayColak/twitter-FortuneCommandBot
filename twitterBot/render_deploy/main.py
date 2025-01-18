@@ -4,6 +4,11 @@ import os
 from dotenv import load_dotenv
 import logging
 import time
+import threading
+from flask import Flask
+
+# Create Flask app
+app = Flask(__name__)
 
 # Load environment variables
 load_dotenv()
@@ -76,17 +81,30 @@ def post_tweet():
     logging.warning("Could not find suitable fortune after maximum attempts")
     return False
 
-def main():
-    """Main function to run the bot"""
+def bot_thread():
+    """Background thread for the bot"""
     while True:
         try:
-            # Post tweet
             post_tweet()
-            # Wait for 24 hours
-            time.sleep(86400)  # 24 hours in seconds
+            time.sleep(86400)  # 24 hours
         except Exception as e:
-            logging.error(f"Main loop error: {str(e)}")
-            time.sleep(300)  # Wait 5 minutes before retrying
+            logging.error(f"Bot thread error: {str(e)}")
+            time.sleep(300)  # 5 minutes before retry
+
+@app.route('/')
+def home():
+    return 'Twitter Fortune Bot is running!'
+
+@app.route('/health')
+def health():
+    return 'OK'
 
 if __name__ == "__main__":
-    main() 
+    # Start bot in a separate thread
+    bot = threading.Thread(target=bot_thread)
+    bot.daemon = True
+    bot.start()
+    
+    # Start web server
+    port = int(os.environ.get('PORT', 10000))
+    app.run(host='0.0.0.0', port=port) 

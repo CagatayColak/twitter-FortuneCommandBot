@@ -25,5 +25,8 @@ RUN mkdir -p /app/logs && \
 # Verify fortune installation
 RUN which fortune && fortune -v
 
+# Expose port
+EXPOSE 10000
+
 # Run the application
 CMD ["python", "main.py"] 

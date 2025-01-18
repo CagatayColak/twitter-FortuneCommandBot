@@ -1,1 +1,17 @@
- 
+services:
+  - type: web
+    name: twitter-fortune-bot
+    env: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    envVars:
+      - key: API_KEY
+        sync: false
+      - key: API_SECRET
+        sync: false
+      - key: BEARER_TOKEN
+        sync: false
+      - key: ACCESS_TOKEN
+        sync: false
+      - key: ACCESS_TOKEN_SECRET
+        sync: false
