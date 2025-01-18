@@ -23,10 +23,10 @@ RUN mkdir -p /app/logs && \
     chmod 777 /app/logs
 
 # Verify fortune installation
-RUN which fortune && fortune -v
+RUN /usr/games/fortune -v
 
 # Expose port
 EXPOSE 10000
 
-# Run the application
-CMD ["python", "main.py"] 
+# Run the application using gunicorn
+CMD ["gunicorn", "--bind", "0.0.0.0:10000", "main:app"] 

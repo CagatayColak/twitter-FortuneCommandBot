@@ -15,3 +15,5 @@ services:
         sync: false
       - key: ACCESS_TOKEN_SECRET
         sync: false
+    healthCheckPath: /health
+    port: 10000
