@@ -1,3 +1,2 @@
 tweepy
-python-dotenv
-fortune-mod 
+python-dotenv 
