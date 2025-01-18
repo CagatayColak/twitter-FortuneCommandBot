@@ -40,9 +40,9 @@ api = tweepy.API(auth)
 def get_fortune():
     """Execute fortune command and return its output"""
     try:
-        cmd = "fortune"
+        cmd = "/usr/games/fortune"
         p1 = subprocess.Popen(
-            cmd.split(), 
+            [cmd], 
             stdout=subprocess.PIPE, 
             stderr=subprocess.PIPE
         )
