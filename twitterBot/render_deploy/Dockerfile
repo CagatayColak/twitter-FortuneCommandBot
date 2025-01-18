@@ -28,5 +28,5 @@ RUN /usr/games/fortune -v
 # Expose port
 EXPOSE 10000
 
-# Run the application using gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:10000", "main:app"] 
+# Run the application using gunicorn with thread support
+CMD ["gunicorn", "--bind", "0.0.0.0:10000", "--threads", "2", "--timeout", "120", "main:app"] 

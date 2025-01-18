@@ -83,9 +83,13 @@ def post_tweet():
 
 def bot_thread():
     """Background thread for the bot"""
+    logging.info("Bot thread started")
     while True:
         try:
+            # Post tweet immediately when starting
+            logging.info("Attempting to post tweet...")
             post_tweet()
+            logging.info("Sleeping for 24 hours...")
             time.sleep(86400)  # 24 hours
         except Exception as e:
             logging.error(f"Bot thread error: {str(e)}")
@@ -99,7 +103,20 @@ def home():
 def health():
     return 'OK'
 
+@app.route('/trigger')
+def trigger_tweet():
+    """Endpoint to manually trigger a tweet"""
+    try:
+        result = post_tweet()
+        if result:
+            return 'Tweet posted successfully!'
+        return 'Failed to post tweet', 500
+    except Exception as e:
+        return f'Error: {str(e)}', 500
+
 if __name__ == "__main__":
+    logging.info("Starting Twitter Fortune Bot...")
+    
     # Start bot in a separate thread
     bot = threading.Thread(target=bot_thread)
     bot.daemon = True
